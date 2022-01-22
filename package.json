@@ -1,0 +1,28 @@
+{
+  "name": "earworms",
+  "version": "1.0.0",
+  "description": "Listen to random earworms",
+  "main": "index.js",
+  "scripts": {
+    "build": "eleventy",
+    "start": "eleventy --serve",
+    "debug": "DEBUG=* eleventy"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vsr/earworms.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "engines": {
+    "node": "12"
+  },
+  "bugs": {
+    "url": "https://github.com/vsr/earworms/issues"
+  },
+  "homepage": "https://github.com/vsr/earworms#readme",
+  "devDependencies": {
+    "@11ty/eleventy": "^1.0.0"
+  }
+}
