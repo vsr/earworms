@@ -1,0 +1,15 @@
+{
+  "background_color": "#f5f5f5",
+  "description": "Plays random earworms.",
+  "display": "fullscreen",
+  "icons": [
+    {
+      "src": "static/earworms.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ],
+  "name": "earworms",
+  "short_name": "earworms",
+  "start_url": "/"
+}
