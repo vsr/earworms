@@ -20,16 +20,21 @@
         height: 100%;
     }
 
-    a {
+    a,
+    button {
         color: #303f9f;
         text-decoration: none;
         border-bottom: 1px solid transparent;
         transition: color 0.5s;
+        cursor: pointer;
     }
 
     a:active,
     a:focus,
-    a:hover {
+    a:hover,
+    button:active,
+    button:focus,
+    button:hover {
         color: #ff5722;
     }
     .flex-center {
@@ -40,9 +45,13 @@
     svg {
         fill: currentColor;
     }
+    button {
+        background: transparent;
+        border: none;
+    }
     .earworm-container {
         width: 100vw;
-        height: calc(100% - 3rem);
+        height: calc(100% - 5rem);
     }
 
     #earworm-player {
@@ -52,7 +61,7 @@
 
     footer {
         border-top: 1px solid #303f9f;
-        height: 3rem;
+        height: 5rem;
         display: flex;
         padding: 0.5em;
     }
@@ -63,11 +72,10 @@
         letter-spacing: 0.1em;
         margin: 0;
     }
-    footer .title svg {
-        margin-right: 0.25em;
-        width: 1.25em;
-        height: 1.25em;
+    .earworm-actions {
+        padding: 0 1em;
     }
+    footer .reload {}
 
     .about-page,
     .notfound-page {

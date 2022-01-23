@@ -8,7 +8,7 @@
         const isValidVideo = (videoId) => videoIds.indexOf(videoId) !== -1;
         const loadVideo = (videoId) => {
             iframe.removeAttribute('srcdoc');
-            iframe.src = "https://www.youtube-nocookie.com/embed/" + videoId + "?autoplay=1";
+            iframe.src = "https://www.youtube-nocookie.com/embed/" + videoId + "?autoplay=1&loop=1&playlist=" + videoId;
         }
         const loadVideoFromHash = () => {
             const videoId = window
@@ -23,9 +23,9 @@
         }
 
         window.addEventListener('load', function () {
-            loadVideoFromHash();
+            setTimeout(loadVideoFromHash, 1300);
             document
-                .querySelector('.title')
+                .querySelector('.reload')
                 .addEventListener('click', function (ev) {
                     ev.preventDefault();
                     window.location.hash = newVideoId();
@@ -34,6 +34,9 @@
         window.addEventListener('hashchange', function () {
             loadVideoFromHash();
         });
+        window.onYouTubeIframeAPIReady = function (yt) {
+            console.log('onYouTubeIframeAPIReady', yt, arguments);
+        };
 
     }());
 </script>

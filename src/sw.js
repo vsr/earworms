@@ -1,8 +1,8 @@
-const PRECACHE = "precache-v1.1";
+const PRECACHE = "precache-v1.2";
 const RUNTIME = "runtime";
 
 // A list of local resources we always want to be cached.
-const PRECACHE_URLS = ["/", "/about/", "/404/", "/static/earworms.png"];
+const PRECACHE_URLS = ["/", "/about/", "/static/earworms.png"];
 
 // The install handler takes care of precaching the resources we always need.
 self.addEventListener("install", (event) => {
