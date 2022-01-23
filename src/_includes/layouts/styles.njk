@@ -4,6 +4,9 @@
     ::before {
         box-sizing: border-box;
     }
+    :root {
+        --footer-height: 3rem;
+    }
 
     html {
         -moz-tab-size: 4;
@@ -51,7 +54,7 @@
     }
     .earworm-container {
         width: 100vw;
-        height: calc(100% - 5rem);
+        height: calc(100% - var(--footer-height));
     }
 
     #earworm-player {
@@ -61,7 +64,9 @@
 
     footer {
         border-top: 1px solid #303f9f;
-        height: 5rem;
+        height: var(--footer-height);
+    }
+    .earworm-bar {
         display: flex;
         padding: 0.5em;
     }
