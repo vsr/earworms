@@ -5,7 +5,7 @@
         box-sizing: border-box;
     }
     :root {
-        --footer-height: 10rem;
+        --footer-height: min(10rem, 30vh);
     }
 
     html {
@@ -69,6 +69,12 @@
     #earworm-player {
         width: 100%;
         height: 100%;
+        filter: unset;
+        transition: all 1s;
+    }
+
+    .loading-player #earworm-player {
+        filter: blur(50px);
     }
 
     footer {
@@ -148,11 +154,7 @@
         vertical-align: middle;
     }
     .about-page,
-    .notfound-page {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
+    .notfound-page {}
     .about-page main,
     .notfound-page main {
         font-size: 1.3em;
@@ -161,5 +163,6 @@
         background-color: #fff;
         max-width: 32rem;
         width: 90vw;
+        margin: 1em auto;
     }
 </style>

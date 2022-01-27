@@ -4,6 +4,14 @@
         const randomItem = (array) => {
             return array[Math.floor(Math.random() * array.length)];
         };
+        const addDocClass = (className) => document
+            .body
+            .classList
+            .add(className);
+        const removeDocClass = (className) => document
+            .body
+            .classList
+            .remove(className);
 
         let player;
         const earwormPlaylists = ['PL0wXgHf3j9Y3lklJdg1TEjp0Eg7LrKbSt'];
@@ -18,20 +26,20 @@
 
         function onPlayerReady(event) {
             player.setShuffle(true);
-            setTimeout(() => player.nextVideo(), 500);
+            setTimeout(() => {
+                player.nextVideo();
+                player.playVideo();
+                setTimeout(() => {
+                    removeDocClass('loading-player');
+                }, 500);
+            }, 500);
         }
 
         function onPlayerStateChange(event) {
             if (event.data == YT.PlayerState.PLAYING) {
-                document
-                    .body
-                    .classList
-                    .add('earworm-playing');
+                addDocClass('earworm-playing');
             } else {
-                document
-                    .body
-                    .classList
-                    .remove('earworm-playing');
+                removeDocClass('earworm-playing');
             }
         }
 
@@ -56,6 +64,7 @@
                     onError: onError
                 }
             });
+            addDocClass('loading-player');
         }
 
         window.addEventListener('load', function () {
@@ -80,16 +89,10 @@
                 .addEventListener('click', function (ev) {
                     if (player.isMuted()) {
                         player.unMute();
-                        document
-                            .body
-                            .classList
-                            .remove('earworm-muted');
+                        removeDocClass('earworm-muted');
                     } else {
                         player.mute();
-                        document
-                            .body
-                            .classList
-                            .add('earworm-muted');
+                        addDocClass('earworm-muted');
                     }
                 });
         });
