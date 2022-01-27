@@ -1,42 +1,100 @@
 <script>
+
     (function () {
+        const randomItem = (array) => {
+            return array[Math.floor(Math.random() * array.length)];
+        };
+        const addDocClass = (className) => document
+            .body
+            .classList
+            .add(className);
+        const removeDocClass = (className) => document
+            .body
+            .classList
+            .remove(className);
 
-        const videoIds = {{ earworms | dump | safe }};
-
-        const iframe = document.querySelector('#earworm-player');
-        const newVideoId = () => videoIds[Math.floor(Math.random() * videoIds.length)];
-        const isValidVideo = (videoId) => videoIds.indexOf(videoId) !== -1;
-        const loadVideo = (videoId) => {
-            iframe.removeAttribute('srcdoc');
-            iframe.src = "https://www.youtube-nocookie.com/embed/" + videoId + "?autoplay=1&loop=1&playlist=" + videoId;
+        let player;
+        const earwormPlaylists = ['PL0wXgHf3j9Y3lklJdg1TEjp0Eg7LrKbSt'];
+        function addYouTubeIframeScript() {
+            const tag = document.createElement('script');
+            tag.src = "https://www.youtube.com/iframe_api";
+            const firstScriptTag = document.getElementsByTagName('script')[0];
+            firstScriptTag
+                .parentNode
+                .insertBefore(tag, firstScriptTag);
         }
-        const loadVideoFromHash = () => {
-            const videoId = window
-                .location
-                .hash
-                .replace('#', '');
-            if (!isValidVideo(videoId)) {
-                window.location.hash = newVideoId();
-                return;
+
+        function onPlayerReady(event) {
+            player.setShuffle(true);
+            setTimeout(() => {
+                player.nextVideo();
+                player.playVideo();
+                setTimeout(() => {
+                    removeDocClass('loading-player');
+                }, 500);
+            }, 500);
+        }
+
+        function onPlayerStateChange(event) {
+            if (event.data == YT.PlayerState.PLAYING) {
+                addDocClass('earworm-playing');
+            } else {
+                removeDocClass('earworm-playing');
             }
-            loadVideo(videoId);
+        }
+
+        function onError(event) {
+            console.error('error playing', event);
+            player.nextVideo();
+        }
+
+        window.onYouTubeIframeAPIReady = function onYouTubeIframeAPIReady() {
+            player = new YT.Player('earworm-player', {
+                host: 'https://www.youtube-nocookie.com',
+                playerVars: {
+                    list: randomItem(earwormPlaylists),
+                    listType: 'playlist',
+                    autoplay: 0,
+                    controls: 0,
+                    playsinline: 1
+                },
+                events: {
+                    'onReady': onPlayerReady,
+                    'onStateChange': onPlayerStateChange,
+                    onError: onError
+                }
+            });
+            addDocClass('loading-player');
         }
 
         window.addEventListener('load', function () {
-            setTimeout(loadVideoFromHash, 1300);
+            addYouTubeIframeScript();
             document
-                .querySelector('.reload')
+                .querySelector('.earworm-actions .next')
                 .addEventListener('click', function (ev) {
-                    ev.preventDefault();
-                    window.location.hash = newVideoId();
+                    player.setShuffle(true);
+                    player.nextVideo();
+                });
+            document
+                .querySelector('.earworm-actions .play-pause')
+                .addEventListener('click', function (ev) {
+                    if (player.getPlayerState() === YT.PlayerState.PLAYING) {
+                        player.pauseVideo();
+                    } else {
+                        player.playVideo();
+                    }
+                });
+            document
+                .querySelector('.earworm-actions .mute-unmute')
+                .addEventListener('click', function (ev) {
+                    if (player.isMuted()) {
+                        player.unMute();
+                        removeDocClass('earworm-muted');
+                    } else {
+                        player.mute();
+                        addDocClass('earworm-muted');
+                    }
                 });
         });
-        window.addEventListener('hashchange', function () {
-            loadVideoFromHash();
-        });
-        window.onYouTubeIframeAPIReady = function (yt) {
-            console.log('onYouTubeIframeAPIReady', yt, arguments);
-        };
-
     }());
 </script>

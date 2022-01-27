@@ -5,7 +5,7 @@
         box-sizing: border-box;
     }
     :root {
-        --footer-height: 3rem;
+        --footer-height: min(10rem, 30vh);
     }
 
     html {
@@ -52,6 +52,15 @@
         background: transparent;
         border: none;
     }
+    .icon {
+        width: 1em;
+        height: 1em;
+    }
+    .icon-button {
+        width: 1em;
+        height: 1em;
+        padding: 0;
+    }
     .earworm-container {
         width: 100vw;
         height: calc(100% - var(--footer-height));
@@ -60,6 +69,12 @@
     #earworm-player {
         width: 100%;
         height: 100%;
+        filter: unset;
+        transition: all 1s;
+    }
+
+    .loading-player #earworm-player {
+        filter: blur(50px);
     }
 
     footer {
@@ -71,23 +86,75 @@
         padding: 0.5em;
     }
 
+    .earworm-actions .next {
+        font-size: 2rem;
+    }
+    .earworm-actions .mute-unmute,
+    .earworm-actions .play-pause {
+        position: relative;
+        font-size: 2rem;
+    }
+    .mute-unmute .muted-icon,
+    .mute-unmute .unmuted-icon,
+    .play-pause .pause-icon,
+    .play-pause .play-icon {
+        position: absolute;
+        left: 0;
+        top: 0;
+        transition: opacity 0.35s;
+    }
+    .play-pause .play-icon {
+        opacity: 1;
+    }
+    .play-pause .pause-icon {
+        opacity: 0;
+    }
+    .earworm-playing .play-pause .play-icon {
+        opacity: 0;
+    }
+    .earworm-playing .play-pause .pause-icon {
+        opacity: 1;
+    }
+    .mute-unmute .unmuted-icon {
+        opacity: 1;
+    }
+    .mute-unmute .muted-icon {
+        opacity: 0;
+    }
+    .earworm-muted .mute-unmute .unmuted-icon {
+        opacity: 0;
+    }
+    .earworm-muted .mute-unmute .muted-icon {
+        opacity: 1;
+    }
+
     footer .title {
         font-size: 1.3em;
         font-weight: 400;
         letter-spacing: 0.1em;
-        margin: 0;
+        margin: 0 1em 0 0;
+    }
+    footer .title-container {
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+    }
+    footer .desc-container {
+        display: flex;
+        align-items: center;
     }
     .earworm-actions {
         padding: 0 1em;
+        gap: 1em;
     }
-    footer .reload {}
+    footer .next {}
 
-    .about-page,
-    .notfound-page {
-        display: flex;
-        align-items: center;
-        justify-content: center;
+    .about-link {
+        font-size: 1.25rem;
+        vertical-align: middle;
     }
+    .about-page,
+    .notfound-page {}
     .about-page main,
     .notfound-page main {
         font-size: 1.3em;
@@ -96,5 +163,6 @@
         background-color: #fff;
         max-width: 32rem;
         width: 90vw;
+        margin: 1em auto;
     }
 </style>
